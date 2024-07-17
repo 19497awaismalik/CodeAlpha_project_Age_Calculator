@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./index.css">
+  <title>Age Calculator</title>
+
+</head>
+
+<body>
+  <div class="header">
+    <div>
+      <h1 class="logo">Age Calculator</h1>
+    </div>
+    <ul>
+      <li>Home</li>
+      <li>ContactUs</li>
+      <li>AboutUs</li>
+      <li>Login</li>
+      <li>SignUp</li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="main">
+      <h1 class="heading">Age Calculator</h1>
+      <div class="dob">
+        <label for="dobInput">Enter your date of birth:</label>
+        <input type="date" id="dob">
+      </div>
+
+      <div class="current-date">
+        <label for="current">Enter your Current Date:</label>
+        <input type="date" id="current">
+      </div>
+      <div class="button">
+        <button onclick="handle()">Calculate</button>
+        <button onclick="Clear()">Clear Date</button>
+      </div>
+    </div>
+  </div>
+  <div class="result-container">
+    <h1 class="result-heading">Result</h1>
+    <h3 class="result-heading3"></h3>
+    <p class="age-data"></p>
+  </div>
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2024 Age Calculator. All rights reserved.</p>
+      <p>
+        <a href="https://www.example.com/privacy-policy">Privacy Policy</a> |
+        <a href="https://www.example.com/terms-of-service">Terms of Service</a>
+      </p>
+    </div>
+  </footer>
+  <script>
+    const handle = () => {
+
+      let dob = document.getElementById("dob");
+      let curren = document.getElementById("current");
+      let resultheading3 = document.getElementsByClassName("result-heading3")[0];
+      let agedata = document.getElementsByClassName("age-data")[0];
+
+      if (dob.value && current.value) {
+        let dateOfBirth = new Date(dob.value);
+        let current = new Date(curren.value);
+
+
+        const monthsOfYear = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+        let dobYear = dateOfBirth.getFullYear();
+        let dobMonth = dateOfBirth.getMonth();
+        let dobDate = dateOfBirth.getDate();
+
+        let currentYear = current.getFullYear();
+        let currentMonth = current.getMonth();
+        let currentDate = current.getDate();
+
+        let yearDiff;
+        let monthDiff;
+        let dateDiff;
+        //dob 03-05-2001
+        //curren 06-25-2024
+        // yearDiff=23
+        yearDiff = currentYear - dobYear;
+
+        // dob 20-03-2001
+        //current 03-3-2024
+        if (currentMonth >= dobMonth) {
+          monthDiff = currentMonth - dobMonth;
+        } else {
+          yearDiff--;
+          monthDiff = 12 + currentMonth - dobMonth;
+        }
+        if (currentDate >= dobDate) {
+          dateDiff = currentDate - dobDate;
+        } else {
+          monthDiff--;
+          let noOfdaysInMonth = new Date(dobYear, dobMonth, 0).getDate();
+          dateDiff = noOfdaysInMonth + currentDate - dobDate;
+          if (monthDiff < 0) {
+            monthDiff = 11;
+            yearDiff--;
+
+          }
+        }
+        resultheading3.innerHTML = `Difference between ${monthsOfYear[dobMonth]} ${dobDate},${dobYear} 
+      and ${monthsOfYear[currentMonth]} ${currentDate}, ${currentYear}`
+
+        agedata.innerHTML = `Your Age is: ${yearDiff} years ${monthDiff} months ${dateDiff} days`
+      }else{
+        alert("No Selected DOB and Current Date")
+      }
+    }
+
+    const Clear = () => {
+      let dob = document.getElementById("dob").value = "";
+      let curren = document.getElementById("current").value = "";
+      let resultheading3 = document.getElementsByClassName("result-heading3")[0].innerHTML = "";
+      let agedata = document.getElementsByClassName("age-data")[0].innerHTML = "";
+    }
+  </script>
+</body>
+
+</html>
